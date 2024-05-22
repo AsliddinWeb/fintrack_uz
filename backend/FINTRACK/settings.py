@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 
+# Jwt
+from datetime import timedelta
+from django.conf import settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-dyd*gx=9wkc*sic2$25wv6rzit7d)!*r&2(8@fdha9l^svd+0d'
@@ -21,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
+    'rest_framework_simplejwt',
 
     # Local APPS
     'expense_app',
@@ -138,7 +143,10 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 #
 # # Google auth
@@ -165,3 +173,19 @@ REST_FRAMEWORK = {
 #
 # SOCIALACCOUNT_GOOGLE_CLIENT_ID = '1049362076225-89uh82nr06qflts0ne5bff42811fhorr.apps.googleusercontent.com'
 # SOCIALACCOUNT_GOOGLE_SECRET = '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'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": settings.SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "JTI_CLAIM": "jti",
+}
