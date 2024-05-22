@@ -5,11 +5,14 @@ from pathlib import Path
 from datetime import timedelta
 from django.conf import settings
 
+# Env
+from dotenv import load_dotenv
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-dyd*gx=9wkc*sic2$25wv6rzit7d)!*r&2(8@fdha9l^svd+0d'
-
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -197,4 +200,4 @@ SIMPLE_JWT = {
 }
 
 
-OPENAI_API_KEY = "sk-proj-Zo5H521RYezX156JvhWBT3BlbkFJ1OUtOu7v7bgEw3qIBPYO"
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
