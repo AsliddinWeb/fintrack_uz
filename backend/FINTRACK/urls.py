@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/v1/auth/', include('account_app.urls')),
     path('api/v1/expense/', include('expense_app.urls')),
     path('api/v1/income/', include('income_app.urls')),
+    path('api/v1/ai/', include('ai_app.urls')),
 
     # Auth
     # path('accounts/', include('allauth.urls')),

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'income_app',
     'account_app',
     'kredit_app',
+    'ai_app',
 
     # Google auth
     # 'django.contrib.sites',
@@ -180,7 +181,7 @@ REST_FRAMEWORK = {
 # SOCIALACCOUNT_GOOGLE_SECRET = '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'
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
@@ -194,3 +195,6 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type",
     "JTI_CLAIM": "jti",
 }
+
+
+OPENAI_API_KEY = "sk-proj-Zo5H521RYezX156JvhWBT3BlbkFJ1OUtOu7v7bgEw3qIBPYO"
