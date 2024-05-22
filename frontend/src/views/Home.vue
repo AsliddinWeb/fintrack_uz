@@ -1,18 +1,12 @@
 <template>
-    <div>
-        <Header/>
-        Home Page
-    </div>
+  <div class="">
+    <Header />
+    
+  </div>
 </template>
 
-<style>
-    div {
-        border: 2px solid red;
-        color: red;
-    }
-</style>
+<style></style>
 
 <script setup>
 import Header from "../components/Header/Header.vue";
-    
 </script>
