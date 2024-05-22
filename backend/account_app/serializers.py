@@ -1,5 +1,10 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+
+# Jwt
+from rest_framework_simplejwt.tokens import RefreshToken
+
+# Local
 from .models import Account
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -21,3 +26,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Create an Account for the user
         Account.objects.create(user=user, name=f"{user.first_name} {user.last_name}", balance=0)
         return user
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            refresh_token = RefreshToken(self.token)
+            refresh_token.blacklist()
+        except Exception as e:
+            self.fail('bad_token')
