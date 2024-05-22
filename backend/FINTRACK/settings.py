@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'expense_app',
     'income_app',
     'account_app',
+    'kredit_app',
 
     # Google auth
     # 'django.contrib.sites',

@@ -15,6 +15,7 @@ schema_view = get_schema_view(
       default_version='v1',
       description="FinTrack Uz",
    ),
+    public=True
 )
 
 
@@ -30,6 +31,7 @@ urlpatterns = [
 
     # Api
     path('api/v1/auth/', include('account_app.urls')),
+    path('api/v1/expense/', include('expense_app.urls')),
 
     # Auth
     # path('accounts/', include('allauth.urls')),
