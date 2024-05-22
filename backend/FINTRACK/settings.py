@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     # Global APPS
     'rest_framework',
     'corsheaders',
+    'drf_yasg',
 
     # Local APPS
     'expense_app',
