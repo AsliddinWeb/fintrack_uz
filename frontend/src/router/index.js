@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import DefaultLayout from "../layouts/DefaultLayout.vue";
 import GuestLayout from "../layouts/GueastLayout.vue";
+import Calculation from "../pages/Calculation.vue"
 
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
         path: "/",
         name: "home",
         component: Home,
+      },
+      {
+        path: "/calculate",
+        name: "calculation",
+        component: Calculation,
       },
     ],
   },
