@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="chart-container">
       <Bar :data="chartData" :options="chartOptions"></Bar>
     </div>
   </template>
@@ -31,7 +31,7 @@
   .chart-container {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 300px;
   }
   </style>
   

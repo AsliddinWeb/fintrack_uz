@@ -1,5 +1,5 @@
 {
-    "labels": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust"],
+    "labels": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust","sentabr", "oktabr"],
     "incomes": [1200, 1500, 1300, 1700, 1600, 1400, 1800],
     "expenses": [800, 900, 950, 1200, 1000, 1100, 950]
   }
