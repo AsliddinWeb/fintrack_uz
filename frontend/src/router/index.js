@@ -48,13 +48,13 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore();
-  if (to.matched.some(record => record.meta.requiresAuth) && !authStore.accessToken) {
-    next('/login');
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const authStore = useAuthStore();
+//   if (to.matched.some(record => record.meta.requiresAuth) && !authStore.accessToken) {
+//     next('/login');
+//   } else {
+//     next();
+//   }
+// });
 
 export default router

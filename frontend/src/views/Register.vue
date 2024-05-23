@@ -113,9 +113,9 @@ export default {
   methods: {
     async register() {
       const authStore = useAuthStore();
-      await authStore.register(this.username, this.password);
+      await authStore.register(this.username, this.password, this.first_name, this.last_name);
       if (authStore.accessToken) {
-        this.$router.push('/');
+        this.$router.push('/login');
       }
     }
   }

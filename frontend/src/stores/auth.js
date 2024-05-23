@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import axios from '../axios';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -11,46 +11,57 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(username, password) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/v1/auth/login/', {
+        const response = await axios.post('/auth/login/', {
           username,
           password,
         });
-        this.accessToken = response.data.accessToken;
-        this.refreshToken = response.data.refreshToken;
-        this.user = response.data.user;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
-        localStorage.setItem('accessToken', this.accessToken);
-        localStorage.setItem('refreshToken', this.refreshToken);
-        localStorage.setItem('user', JSON.stringify(this.user));
-        this.loginError = null; // Clear any previous login error
+        if (response.status === 200) {
+          this.accessToken = response.data.accessToken;
+          this.refreshToken = response.data.refreshToken;
+          this.user = response.data.user;
+          axios.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
+          localStorage.setItem('accessToken', this.accessToken);
+          localStorage.setItem('refreshToken', this.refreshToken);
+          localStorage.setItem('user', JSON.stringify(this.user));
+          this.loginError = null; // Clear any previous login error
+          return true; // Return true for successful login
+        } else {
+          this.loginError = 'Login error';
+          return false;
+        }
       } catch (error) {
         this.loginError = error.response ? error.response.data.detail : 'Login error';
         console.error('Login error:', error);
+        return false; // Return false for failed login
       }
     },
     async register(first_name, last_name, username, password) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/v1/auth/register/', {
-            first_name,
-            last_name,
+        const response = await axios.post('/auth/register/', {
+          first_name,
+          last_name,
           username,
           password,
         });
-        this.accessToken = response.data.accessToken;
-        this.refreshToken = response.data.refreshToken;
-        this.user = response.data.user;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
-        localStorage.setItem('accessToken', this.accessToken);
-        localStorage.setItem('refreshToken', this.refreshToken);
-        localStorage.setItem('user', JSON.stringify(this.user));
-        this.loginError = null; 
+        if (response.status === 200) {
+          this.accessToken = response.data.accessToken;
+          this.refreshToken = response.data.refreshToken;
+          this.user = response.data.user;
+          axios.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
+          localStorage.setItem('accessToken', this.accessToken);
+          localStorage.setItem('refreshToken', this.refreshToken);
+          localStorage.setItem('user', JSON.stringify(this.user));
+          this.loginError = null; 
+        } else {
+          console.error('Register error:', response);
+        }
       } catch (error) {
         console.error('Register error:', error);
       }
     },
     async refreshToken() {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/v1/refresh-token', {
+        const response = await axios.post('/refresh-token', {
           refreshToken: this.refreshToken,
         });
         this.accessToken = response.data.accessToken;
@@ -65,7 +76,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = null;
       this.accessToken = null;
       this.refreshToken = null;
-      axios.defaults.headers.common['Authorization'] = '';
+      delete axios.defaults.headers.common['Authorization'];
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');

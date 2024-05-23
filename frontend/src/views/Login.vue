@@ -100,8 +100,8 @@ export default {
   methods: {
     async login() {
       const authStore = useAuthStore();
-      await authStore.login(this.username, this.password);
-      if (authStore.accessToken) {
+      const loginSuccessful = await authStore.login(this.username, this.password);
+      if (loginSuccessful) {
         this.$router.push('/');
       }
     }
