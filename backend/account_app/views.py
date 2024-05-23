@@ -1,12 +1,15 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT, HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
+from rest_framework.permissions import IsAuthenticated
 
 # Jwt
 from rest_framework_simplejwt.tokens import RefreshToken
 
 # Local
-from .serializers import RegisterSerializer, LogoutSerializer
+from .serializers import (RegisterSerializer, LogoutSerializer,
+                          AccountUpdateSerializer, AccountImageSerializer)
+from .models import Account
 
 class RegisterView(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -31,3 +34,20 @@ class LogoutView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(status=HTTP_204_NO_CONTENT)
+
+
+class AccountImageUpdateView(generics.UpdateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountImageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.account
+
+class UserUpdateView(generics.UpdateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountUpdateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.account

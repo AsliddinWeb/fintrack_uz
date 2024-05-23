@@ -40,3 +40,40 @@ class LogoutSerializer(serializers.Serializer):
             refresh_token.blacklist()
         except Exception as e:
             self.fail('bad_token')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name']
+        extra_kwargs = {
+            'email': {'required': False},
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+        }
+
+class AccountImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['image']
+        extra_kwargs = {
+            'image': {'required': False},
+        }
+
+class AccountUpdateSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Account
+        fields = ['user']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        user = instance.user
+
+        # Update user fields
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        user.save()
+
+        return instance
