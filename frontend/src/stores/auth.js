@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from '../axios';
+import axiosInstance from '../axios';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -11,15 +11,16 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(username, password) {
       try {
-        const response = await axios.post('/auth/login/', {
+        const response = await axiosInstance.post('/auth/login/', {
           username,
           password,
         });
         if (response.status === 200) {
-          this.accessToken = response.data.accessToken;
-          this.refreshToken = response.data.refreshToken;
+            console.log(response.data);
+          this.accessToken = response.data.access;
+          this.refreshToken = response.data.refresh;
           this.user = response.data.user;
-          axios.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
+          axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
           localStorage.setItem('accessToken', this.accessToken);
           localStorage.setItem('refreshToken', this.refreshToken);
           localStorage.setItem('user', JSON.stringify(this.user));
@@ -37,7 +38,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async register(first_name, last_name, username, password) {
       try {
-        const response = await axios.post('/auth/register/', {
+        const response = await axiosInstance.post('/auth/register/', {
           first_name,
           last_name,
           username,
@@ -61,7 +62,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async refreshToken() {
       try {
-        const response = await axios.post('/refresh-token', {
+        const response = await axiosInstance.post('/refresh-token', {
           refreshToken: this.refreshToken,
         });
         this.accessToken = response.data.accessToken;

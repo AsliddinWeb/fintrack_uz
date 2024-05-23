@@ -64,173 +64,176 @@
               <div
                 v-bind:class="{ hidden: openTab !== 1, block: openTab === 1 }"
               >
-              <div
-                    class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden "
-                  >
-                    <div class="md:flex">
-                      <div class="p-8">
-                        <h2
-                          class="uppercase tracking-wide text-lg text-indigo-500 font-semibold"
-                        >
-                          Yangi Xarajatlarni Qo'shish
-                        </h2>
-                        <form @submit.prevent="submitExpense">
-                          <div class="mt-4">
-                            <label
-                              for="category"
-                              class="block text-sm font-medium text-gray-700"
-                              >Kategoriya</label
+                <div
+                  class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden"
+                >
+                  <div class="md:flex">
+                    <div class="p-8">
+                      <h2
+                        class="uppercase tracking-wide text-lg text-indigo-500 font-semibold"
+                      >
+                        Yangi Xarajatlarni Qo'shish
+                      </h2>
+                      <form @submit.prevent="submitExpense">
+                        <div class="mt-4">
+                          <label
+                            for="category"
+                            class="block text-sm font-medium text-gray-700"
+                            >Kategoriya</label
+                          >
+                          <select
+                            v-model="categoryEx"
+                            id="category"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                          >
+                            <option value="">Kategoriya tanlang</option>
+                            <option
+                              v-for="cat in categories"
+                              :key="cat.id"
+                              :value="cat.id"
                             >
-                            <select
-                              v-model="category"
-                              id="category"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            >
-                              <option value="">Kategoriya tanlang</option>
-                              <option value="sport">Sport</option>
-                              <option value="ovqatlanish">Ovqatlanish</option>
-                              <option value="transport">Transport</option>
-                              <option value="boshqa">Boshqa</option>
-                            </select>
-                          </div>
-                          <div class="mt-4">
-                            <label
-                              for="amount"
-                              class="block text-sm font-medium text-gray-700"
-                              >Summa</label
-                            >
-                            <input
-                              type="number"
-                              v-model="amount"
-                              id="amount"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                              required
-                            />
-                          </div>
-                          <div class="mt-4">
-                            <label
-                              for="description"
-                              class="block text-sm font-medium text-gray-700"
-                              >Izoh</label
-                            >
-                            <textarea
-                              v-model="description"
-                              id="description"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            ></textarea>
-                          </div>
-                          <div class="mt-4">
-                            <label
-                              for="date"
-                              class="block text-sm font-medium text-gray-700"
-                              >Sana</label
-                            >
-                            <input
-                              type="date"
-                              v-model="date"
-                              id="date"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                              required
-                            />
-                          </div>
-                          <div class="mt-4">
-                            <button
-                              type="submit"
-                              class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                              Qo'shish
-                            </button>
-                          </div>
-                        </form>
-                      </div>
+                              {{ cat.name }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="mt-4">
+                          <label
+                            for="amount"
+                            class="block text-sm font-medium text-gray-700"
+                            >Summa</label
+                          >
+                          <input
+                            type="number"
+                            v-model="amount"
+                            id="amount"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mt-4">
+                          <label
+                            for="description"
+                            class="block text-sm font-medium text-gray-700"
+                            >Izoh</label
+                          >
+                          <textarea
+                            v-model="description"
+                            id="description"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                          ></textarea>
+                        </div>
+                        <div class="mt-4">
+                          <label
+                            for="date"
+                            class="block text-sm font-medium text-gray-700"
+                            >Sana</label
+                          >
+                          <input
+                            type="date"
+                            v-model="date"
+                            id="date"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mt-4">
+                          <button
+                            type="submit"
+                            class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          >
+                            Qo'shish
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
-                
+                </div>
               </div>
               <div
                 v-bind:class="{ hidden: openTab !== 3, block: openTab === 3 }"
               >
-              <div
-                    class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden "
-                  >
-                    <div class="md:flex">
-                      <div class="p-8">
-                        <h2
-                          class="uppercase tracking-wide text-lg text-indigo-500 font-semibold"
-                        >
-                          Yangi Daromadlarni Qo'shish
-                        </h2>
-                        <form @submit.prevent="submitExpense">
-                          <div class="mt-4">
-                            <label
-                              for="category"
-                              class="block text-sm font-medium text-gray-700"
-                              >Kategoriya</label
+                <div
+                  class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden"
+                >
+                  <div class="md:flex">
+                    <div class="p-8">
+                      <h2
+                        class="uppercase tracking-wide text-lg text-indigo-500 font-semibold"
+                      >
+                        Yangi Daromadlarni Qo'shish
+                      </h2>
+                      <form @submit.prevent="submitIncome">
+                        <div class="mt-4">
+                          <label
+                            for="category"
+                            class="block text-sm font-medium text-gray-700"
+                            >Kategoriya</label
+                          >
+                          <select
+                            v-model="categoryIn"
+                            id="category"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                          >
+                            <option value="">Kategoriya tanlang</option>
+                            <option
+                              v-for="cat in incomeCategories"
+                              :key="cat.id"
+                              :value="cat.id"
                             >
-                            <select
-                              v-model="category"
-                              id="category"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            >
-                              <option value="">Kategoriya tanlang</option>
-                              <option value="sport">Sport</option>
-                              <option value="ovqatlanish">Ovqatlanish</option>
-                              <option value="transport">Transport</option>
-                              <option value="boshqa">Boshqa</option>
-                            </select>
-                          </div>
-                          <div class="mt-4">
-                            <label
-                              for="amount"
-                              class="block text-sm font-medium text-gray-700"
-                              >Summa</label
-                            >
-                            <input
-                              type="number"
-                              v-model="amount"
-                              id="amount"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                              required
-                            />
-                          </div>
-                          <div class="mt-4">
-                            <label
-                              for="description"
-                              class="block text-sm font-medium text-gray-700"
-                              >Izoh</label
-                            >
-                            <textarea
-                              v-model="description"
-                              id="description"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            ></textarea>
-                          </div>
-                          <div class="mt-4">
-                            <label
-                              for="date"
-                              class="block text-sm font-medium text-gray-700"
-                              >Sana</label
-                            >
-                            <input
-                              type="date"
-                              v-model="date"
-                              id="date"
-                              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                              required
-                            />
-                          </div>
-                          <div class="mt-4">
-                            <button
-                              type="submit"
-                              class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                              Qo'shish
-                            </button>
-                          </div>
-                        </form>
-                      </div>
+                              {{ cat.name }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="mt-4">
+                          <label
+                            for="amount"
+                            class="block text-sm font-medium text-gray-700"
+                            >Summa</label
+                          >
+                          <input
+                            type="number"
+                            v-model="amount"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mt-4">
+                          <label
+                            for="description"
+                            class="block text-sm font-medium text-gray-700"
+                            >Izoh</label
+                          >
+                          <textarea
+                            v-model="description"
+                            id="description"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                          ></textarea>
+                        </div>
+                        <div class="mt-4">
+                          <label
+                            for="date"
+                            class="block text-sm font-medium text-gray-700"
+                            >Sana</label
+                          >
+                          <input
+                            type="date"
+                            v-model="date"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mt-4">
+                          <button
+                            type="submit"
+                            class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          >
+                            Qo'shish
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
           </div>
@@ -241,44 +244,89 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+import axiosInstance from "../axios";
+
 export default {
   name: "pink-tabs",
   data() {
     return {
       openTab: 1,
-      category: "",
+      categoryEx: "",
+      categoryIn: "",
       amount: "",
       description: "",
       date: "",
+      categories: [],
+      incomeCategories: []
     };
+  },
+  async created() {
+    await this.loadCategories();
+    await this.loadIncomeCategories();
   },
   methods: {
     toggleTabs: function (tabNumber) {
       this.openTab = tabNumber;
     },
+    async loadCategories() {
+      try {
+        const response = await axiosInstance.get('/expense/categories/');
+        this.categories = response.data;
+      } catch (error) {
+        console.error('Kategoriyalarni yuklashda xatolik:', error);
+      }
+    },
+    async loadIncomeCategories() {
+      try {
+        const response = await axiosInstance.get('/income/categories/');
+        this.incomeCategories = response.data;
+      } catch (error) {
+        console.error('Kategoriyalarni yuklashda xatolik:', error);
+      }
+    },
     async submitExpense() {
       try {
         const expenseData = {
-          category: this.category,
+          category: this.categoryEx,
           amount: this.amount,
           description: this.description,
-          date: this.date,
+          date: this.date
         };
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/v1/expense/",
-          expenseData
-        );
-        console.log("Xarajat muvaffaqiyatli qo'shildi:", response.data);
+        const response = await axiosInstance.post('/expense/', expenseData);
+        console.log('Xarajat muvaffaqiyatli qo\'shildi:', response.data);
         // Clear form
-        this.category = "";
-        this.amount = "";
-        this.description = "";
-        this.date = "";
+        this.category = '';
+        this.amount = '';
+        this.description = '';
+        this.date = '';
+        this.$router.push('/');
+
       } catch (error) {
-        console.error("Xarajat qo'shishda xatolik:", error);
+        console.error('Xarajat qo\'shishda xatolik:', error);
       }
     },
+    async submitIncome() {
+      try {
+        const incomeData = {
+          category: this.categoryIn,
+          amount: this.amount,
+          description: this.description,
+          date: this.date
+        };
+        const response = await axiosInstance.post('/income/', incomeData);
+        console.log('Xarajat muvaffaqiyatli qo\'shildi:', response.data);
+        // Clear form
+        this.category = '';
+        this.amount = '';
+        this.description = '';
+        this.date = '';
+        this.$router.push('/');
+
+      } catch (error) {
+        console.error('Xarajat qo\'shishda xatolik:', error);
+      }
+    }
   },
 };
 </script>
