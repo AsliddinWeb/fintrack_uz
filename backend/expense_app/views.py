@@ -8,8 +8,8 @@ from .filters import ExpenseFilter
 
 # Local
 from account_app.models import Account
-from .models import Expense
-from .serializers import ExpenseSerializer
+from .models import Expense, ExpenseCategory
+from .serializers import ExpenseSerializer, ExpenseCategorySerializer
 
 class ExpenseListCreateView(generics.ListCreateAPIView):
     queryset = Expense.objects.all()
@@ -50,3 +50,8 @@ class ExpenseDetailView(generics.RetrieveUpdateDestroyAPIView):
         account = expense.account
         account.balance += previous_amount - expense.amount
         account.save()
+
+
+class ExpenseCaetgoryList(generics.ListAPIView):
+    queryset = ExpenseCategory.objects.all()
+    serializer_class = ExpenseCategorySerializer

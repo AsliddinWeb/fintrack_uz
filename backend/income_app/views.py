@@ -8,8 +8,8 @@ from .filters import IncomeFilter
 
 # Local
 from account_app.models import Account
-from .models import Income
-from .serializers import IncomeSerializer
+from .models import Income, IncomeCategory
+from .serializers import IncomeSerializer, IncomeCategorySerializer
 
 class IncomeListCreateView(generics.ListCreateAPIView):
     queryset = Income.objects.all()
@@ -50,3 +50,8 @@ class IncomeDetailView(generics.RetrieveUpdateDestroyAPIView):
         account = income.account
         account.balance += income.amount - previous_amount
         account.save()
+
+
+class IncomeCaetgoryList(generics.ListAPIView):
+    queryset = IncomeCategory.objects.all()
+    serializer_class = IncomeCategorySerializer
