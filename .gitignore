@@ -48,3 +48,5 @@ yarn-error.log
 
 # Backend expense_app pycache
 backend/expense_app/__pycache__/
+backend/income_app/__pycache__/
+backend/FINTRACK/__pycache__/
