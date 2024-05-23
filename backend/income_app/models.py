@@ -5,6 +5,7 @@ from account_app.models import Account
 # Daromad Kategoriya modeli
 class IncomeCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nomi")
+    icon = models.CharField(max_length=255, null=True, blank=True, verbose_name="Kategoriya rasmi")
 
     def __str__(self):
         return self.name
