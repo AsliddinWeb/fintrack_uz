@@ -5,6 +5,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Chart
+from .views import DataView
+
 # Swagger UI
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -23,7 +26,7 @@ admin.site.site_title = "FinTrack Uz | Admin"
 admin.site.site_header = "FintrackUz"
 admin.site.index_title = "Dashboard"
 
-urlpatterns = [
+urlpattern_basic = [
     path("admin/", admin.site.urls),
 
     # Docs
@@ -36,8 +39,17 @@ urlpatterns = [
     path('api/v1/ai/', include('ai_app.urls')),
 
     # Auth
-    # path('accounts/', include('allauth.urls')),
+
 ]
+
+urlpattern_chart = [
+    path('api/v1/chart/daily/', DataView.as_view(), {'period': 'daily'}, name='daily-data'),
+    path('api/v1/chart/weekly/', DataView.as_view(), {'period': 'weekly'}, name='weekly-data'),
+    path('api/v1/chart/monthly/', DataView.as_view(), {'period': 'monthly'}, name='monthly-data'),
+    path('api/v1/chart/yearly/', DataView.as_view(), {'period': 'yearly'}, name='yearly-data'),
+]
+
+urlpatterns = urlpattern_basic + urlpattern_chart
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

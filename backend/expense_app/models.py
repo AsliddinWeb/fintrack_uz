@@ -20,7 +20,7 @@ class Expense(models.Model):
     category = models.ForeignKey(ExpenseCategory, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Kategoriya")
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Miqdor")
     description = models.CharField(max_length=255, null=True, blank=True, verbose_name="Tavsif")
-    date = models.DateField(verbose_name="Sana")
+    date = models.DateTimeField(verbose_name="Sana")
 
     def __str__(self):
         return f"Expense - {self.amount} - {self.date}"
