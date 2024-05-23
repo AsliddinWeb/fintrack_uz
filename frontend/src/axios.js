@@ -8,8 +8,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const authStore = useAuthStore();
-    if (authStore.accessToken) {
-      config.headers['Authorization'] = `Bearer ${authStore.accessToken}`;
+    if (localStorage.accessToken) {
+      config.headers['Authorization'] = `Bearer ${localStorage.accessToken}`;
     }
     return config;
   },

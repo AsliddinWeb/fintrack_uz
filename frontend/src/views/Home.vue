@@ -174,6 +174,7 @@
 import Header from "../components/Header/Header.vue";
 import axios from "axios";
 import FinanceChart from "../components/charts/FinanceChart.vue";
+import axiosInstance from '../axios';
 
 export default {
   name: "Home",
@@ -190,14 +191,16 @@ export default {
     };
   },
   methods: {
-    async fetchChartData(start_date, end_date) {
+    async fetchChartData(period) {
+        console.log(localStorage.getItem('accessToken'));
       try {
-        const response = await axios.get(
-          `/finance-data.json`
+        const response = await axiosInstance.get(
+          `/chart/${period}`
         );
+        console.log(response.data + "dafdsf");
         if (response.data) {
           const financeData = response.data;
-          console.log(financeData.labels);
+          console.log(financeData);
 
           const totalIncome = financeData.incomes.reduce((a, b) => a + b, 0);
           const totalExpenses = financeData.expenses.reduce((a, b) => a + b, 0);
@@ -283,6 +286,7 @@ export default {
   },
   mounted() {
     this.getCurrentDate();
+    this.fetchChartData("daily");
   },
   async created() {
     this.fetchChartData("daily");
