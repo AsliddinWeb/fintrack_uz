@@ -65,13 +65,49 @@
                 v-bind:class="{ hidden: openTab !== 1, block: openTab === 1 }"
               >
                 <div>
-                  <div
-                    class="block rounded-lg bg-white text-center shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface"
+                    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div class="md:flex">
+      <div class="p-8">
+        <h2 class="uppercase tracking-wide text-lg text-indigo-500 font-semibold">Yangi Xarajat/Daromad Qo'shish</h2>
+        <form @submit.prevent="submitExpense">
+          <div class="mt-4">
+            <label for="category" class="block text-sm font-medium text-gray-700">Kategoriya</label>
+            <select v-model="category" id="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option value="">Kategoriya tanlang</option>
+              <option value="sport">Sport</option>
+              <option value="ovqatlanish">Ovqatlanish</option>
+              <option value="transport">Transport</option>
+              <option value="boshqa">Boshqa</option>
+            </select>
+          </div>
+          <div class="mt-4">
+            <label for="amount" class="block text-sm font-medium text-gray-700">Summa</label>
+            <input type="number" v-model="amount" id="amount" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" required>
+          </div>
+          <div class="mt-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Izoh</label>
+            <textarea v-model="description" id="description" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></textarea>
+          </div>
+          <div class="mt-4">
+            <label for="date" class="block text-sm font-medium text-gray-700">Sana</label>
+            <input type="date" v-model="date" id="date" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" required>
+          </div>
+          <div class="mt-4">
+            <button type="submit" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Qo'shish
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+                  <!-- <div
+                    class="block border-4 w-64 rounded-lg bg-white text-center shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface"
                   >
                     <div
                       class="border-b-2 border-neutral-100 px-6 py-3 dark:border-white/10"
                     >
-                      Featured
+                      Xarajatlar
                     </div>
                     <div class="p-6">
                       <h5 class="mb-2 text-xl font-medium leading-tight">
@@ -94,9 +130,9 @@
                     <div
                       class="border-t-2 border-neutral-100 px-6 py-3 dark:border-white/10 text-surface/75 dark:text-neutral-300"
                     >
-                      2 days ago
+                      Har bir xarajatlaringizni kiritib boring
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div
@@ -134,17 +170,41 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "pink-tabs",
   data() {
     return {
       openTab: 1,
+      category: '',
+      amount: '',
+      description: '',
+      date: ''
     };
   },
   methods: {
     toggleTabs: function (tabNumber) {
       this.openTab = tabNumber;
     },
+    async submitExpense() {
+      try {
+        const expenseData = {
+          category: this.category,
+          amount: this.amount,
+          description: this.description,
+          date: this.date
+        };
+        const response = await axios.post('http://127.0.0.1:8000/api/v1/expense/', expenseData);
+        console.log('Xarajat muvaffaqiyatli qo\'shildi:', response.data);
+        // Clear form
+        this.category = '';
+        this.amount = '';
+        this.description = '';
+        this.date = '';
+      } catch (error) {
+        console.error('Xarajat qo\'shishda xatolik:', error);
+      }
+    }
   },
 };
 </script>

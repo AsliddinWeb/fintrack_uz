@@ -9,7 +9,7 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form class="space-y-6" @submit.prevent="login">
         <div>
           <label
             for="text"
@@ -19,9 +19,10 @@
           <div class="mt-2">
             <input
               id="text"
-              name="text"
+              name="username"
               type="text"
               autocomplete="text"
+              v-model="username"
               required
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
@@ -42,17 +43,18 @@
               name="password"
               type="password"
               autocomplete="current-password"
+              v-model="password"
               required
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <div class="text-sm py-2">
+          <!-- <div class="text-sm py-2">
             <a
               href="#"
               class="font-semibold text-indigo-600 hover:text-indigo-500"
               >Parolni tiklash</a
             >
-          </div>
+          </div> -->
         </div>
 
         <div>
@@ -62,6 +64,9 @@
           >
             Tizimga kirish
           </button>
+        </div>
+        <div v-if="loginError" class="mt-4 text-red-500">
+          {{ loginError }}
         </div>
       </form>
 
@@ -77,6 +82,30 @@
   </div>
 </template>
 <script>
-export default {};
+import { useAuthStore } from '../stores/auth';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: ''
+    };
+  },
+  computed: {
+    loginError() {
+      const authStore = useAuthStore();
+      return authStore.loginError;
+    }
+  },
+  methods: {
+    async login() {
+      const authStore = useAuthStore();
+      await authStore.login(this.username, this.password);
+      if (authStore.accessToken) {
+        this.$router.push('/');
+      }
+    }
+  }
+};
 </script>
 <style lang=""></style>
