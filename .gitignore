@@ -1,3 +1,50 @@
-fintrack-venv/
+# Python
+*.pyc
+*.pyo
+*.pyd
 __pycache__/
+*.so
 
+# Django
+*.log
+*.pot
+*.pyc
+*.mo
+*.pyo
+*.pyd
+*.db
+.env
+# MacOS
+.DS_Store
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Virtualenv
+fintrack-venv/
+ENV/
+env/
+ENV.bak/
+venv.bak/
+
+# Local settings
+local_settings.py
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Backend expense_app pycache
+backend/expense_app/__pycache__/
